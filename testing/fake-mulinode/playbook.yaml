@@ -33,19 +33,36 @@
         ./ovn_cluster.sh start
       fi
 
-  # - name: run postgres
-  #   docker_compose:
-  #     project_name: db
-  #     definition: 
-  #       services:
-  #         postgres:
-  #           image: postgres
-  #           environment:
-  #             POSTGRES_PASSWORD: "mysecretpassword"
-  #             PGUSER: "postgres"
-  #           healthcheck:
-  #             test: [ "CMD-SHELL", "pg_isready" ]
-  #             interval: 1s
-  #             timeout: 60s
-  #             retries: 5
-  #             start_period: 5s
+  - name: Log into private registry and force re-authorization
+    docker_login:
+      registry: harbor.mellanox.com
+      username: cloudO
+      password: Dev12345
+      reauthorize: yes
+
+  - name: run postgres
+    docker_compose:
+      project_name: b
+      definition:
+        services:
+          postgres:
+            image: postgres
+            network_mode: "host"
+            environment:
+              POSTGRES_PASSWORD: "mysecretpassword"
+              PGUSER: "postgres"
+            healthcheck:
+              test: [ "CMD-SHELL", "pg_isready" ]
+              interval: 1s
+              timeout: 60s
+              retries: 5
+              start_period: 5s
+          ovn-domain-service:
+            image: harbor.mellanox.com/cloud-orchestration-dev/mfilanov/ovn-domain-service:latest
+            network_mode: "host"
+            environment:
+              DB_HOST: "127.0.0.1"
+              OVNNB_ENDPOINT: "tcp:127.0.0.1:6641"
+            depends_on:
+              postgres:
+                condition: service_healthy
