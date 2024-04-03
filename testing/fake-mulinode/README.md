@@ -35,6 +35,7 @@ ansible-playbook playbook.yaml -i hosts -e "@variables.yaml"
 ```
 This playbook will expect to have some varialbes in order to run, for example setting the image of the service
 it could be done by setting a variables file or specifically setting the image in the command line.
+Same is done for the container registry.
 
 The run will intall needed packages in order to run containers and docker-compose
 Will build and run fake ovn multinode

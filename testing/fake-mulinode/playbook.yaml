@@ -35,12 +35,12 @@
 
   - name: Log into private registry and force re-authorization
     docker_login:
-      registry: harbor.mellanox.com
-      username: cloudO
-      password: Dev12345
+      registry: "{{ docker_registry }}"
+      username: "{{ docker_registry_user }}"
+      password: "{{ docker_registry_pass }}"
       reauthorize: yes
 
-  - name: run postgres
+  - name: run ovn domain service with DB 
     docker_compose:
       project_name: b
       definition:
