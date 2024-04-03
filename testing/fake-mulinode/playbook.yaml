@@ -1,0 +1,51 @@
+---
+- name: deploy ovn isolation 
+  hosts: cloud
+  remote_user: root
+
+  tasks:
+  - name: install docker
+    ansible.builtin.pip:
+      name: docker
+      executable: pip3
+
+  - name: install docker compose
+    ansible.builtin.pip:
+      name: docker-compose
+      executable: pip3
+  
+  - name: Git checkout ovn-fake-multinode
+    ansible.builtin.git:
+      repo: 'https://github.com/tarekhariri93/ovn-fake-multinode.git'
+      dest: /root/work/ovn-fake-multinode
+
+  - name: build ovn-fake-multinode
+    ansible.builtin.shell: |
+      if [ -z "$(docker images -q ovn/ovn-multi-node)" ] ; then 
+        cd /root/work/ovn-fake-multinode
+        ./ovn_cluster.sh build
+      fi
+
+  - name: start ovn-fake-multinode
+    ansible.builtin.shell: |
+      if [ -z "$(docker ps -f name=ovn-central -q)" ] ; then 
+        cd /root/work/ovn-fake-multinode
+        ./ovn_cluster.sh start
+      fi
+
+  # - name: run postgres
+  #   docker_compose:
+  #     project_name: db
+  #     definition: 
+  #       services:
+  #         postgres:
+  #           image: postgres
+  #           environment:
+  #             POSTGRES_PASSWORD: "mysecretpassword"
+  #             PGUSER: "postgres"
+  #           healthcheck:
+  #             test: [ "CMD-SHELL", "pg_isready" ]
+  #             interval: 1s
+  #             timeout: 60s
+  #             retries: 5
+  #             start_period: 5s

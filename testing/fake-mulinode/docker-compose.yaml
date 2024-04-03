@@ -1,0 +1,12 @@
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "mysecretpassword"
+      PGUSER: "postgres"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 1s
+      timeout: 60s
+      retries: 5
+      start_period: 5s
