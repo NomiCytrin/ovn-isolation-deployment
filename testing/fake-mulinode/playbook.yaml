@@ -58,7 +58,7 @@
               retries: 5
               start_period: 5s
           ovn-domain-service:
-            image: harbor.mellanox.com/cloud-orchestration-dev/mfilanov/ovn-domain-service:latest
+            image: "{{ ovn_domain_service_image }}"
             network_mode: "host"
             environment:
               DB_HOST: "127.0.0.1"

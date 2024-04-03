@@ -1,0 +1,2 @@
+---
+ovn_domain_service_image: "harbor.mellanox.com/cloud-orchestration-dev/mfilanov/ovn-domain-service:latest"
