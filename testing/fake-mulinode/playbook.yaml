@@ -42,7 +42,7 @@
 
   - name: run ovn domain service with DB 
     docker_compose:
-      project_name: b
+      project_name: ovn-domain-service
       definition:
         services:
           postgres:

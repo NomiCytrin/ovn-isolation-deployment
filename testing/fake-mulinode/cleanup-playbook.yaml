@@ -1,0 +1,19 @@
+---
+- name: cleanup ovn isolation
+  hosts: cloud
+  remote_user: root
+
+  tasks:
+  - name: install docker
+    ansible.builtin.pip:
+      name: docker
+      executable: pip3
+
+  - name: stop ovn-fake-multinode
+    ansible.builtin.shell: |
+      cd /root/work/ovn-fake-multinode
+      ./ovn_cluster.sh stop
+  
+  - name: Stop docker containers
+    shell: |
+      docker stop $(docker ps -aq)

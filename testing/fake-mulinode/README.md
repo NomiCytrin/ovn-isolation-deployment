@@ -53,3 +53,11 @@ f9d6c6421826   927a8c8d1e1d                                                     
 b24245525698   927a8c8d1e1d                                                                     "/usr/sbin/init"         2 days ago       Up 2 days                                                             ovn-gw-1
 c43e1f8838b8   927a8c8d1e1d                                                                     "/usr/sbin/init"         2 days ago       Up 2 days                 0.0.0.0:6641->6641/tcp, :::6641->6641/tcp   ovn-central-az1-1
 ```
+
+# cleanup 
+
+stop fake ovn multinode ånd all the other containers, be aware that all conatoners will stop, not only the one that where part of the docker compose
+
+```sh
+ansible-playbook cleanup-playbook.yaml -i hosts -e "@variables.yaml"
+```
