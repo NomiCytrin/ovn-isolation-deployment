@@ -1,0 +1,34 @@
+# [all]
+
+[all:vars]
+
+
+[compute]
+c-141-7-80-083
+c-141-7-80-084
+
+[compute:vars]
+ansible_python_interpreter=/usr/libexec/platform-python
+
+num_vfs=4
+uplink=p0
+
+[dpu]
+10.141.0.2  encap_ip=20.0.0.1/24 ovn_hostname=bf1
+10.141.0.6  encap_ip=20.0.0.2/24 ovn_hostname=bf2
+
+[dpu:vars]
+ansible_python_interpreter=/usr/bin/python3
+
+uplink_name=p0
+bridge_name=br{{uplink_name}}
+
+
+ovs_timeout=30
+ovs_datapath_type=netdev
+mtu=9216
+
+hugepages_count=1536
+
+ovn_sb_db_ip=10.237.153.181
+ovn_bridge_mappings=physnet:{{bridge_name}}

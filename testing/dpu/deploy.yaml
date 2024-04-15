@@ -1,0 +1,17 @@
+---
+- name: Host setup
+  hosts: compute
+  gather_facts: no
+  tasks:
+  - include_tasks: tasks/compute/main.yaml
+
+- name: BF setup
+  hosts: dpu
+  gather_facts: no
+  tasks:
+  - include_tasks: tasks/dpu/main.yaml
+  - include_tasks: tasks/dpu/configure_ovs.yaml
+
+
+
+
