@@ -1,0 +1,12 @@
+[all:vars]
+
+[cloud]
+<host_name_or_ip>
+
+[cloud:vars]
+ansible_python_interpreter=/usr/bin/python3
+ovn_domain_service_image=nvcr.io/npwmculvpxva/nbu-sdn/ovn-domain-service:latest
+ovndb_image=nvcr.io/npwmculvpxva/nbu-sdn/ovndb:latest
+docker_registry=nvcr.io
+docker_registry_user=<registry_user>
+docker_registry_pass=<registry_password>

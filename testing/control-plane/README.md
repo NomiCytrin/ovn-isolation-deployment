@@ -1,0 +1,47 @@
+# setup
+
+Before proceeding, ensure that you have access to the remote host where Ansible will execute its modules. This can be accomplished by copying your public key to the authorized keys on the remote host using the following command:
+`ssh-copy-id -i ~/.ssh/id_rsa.pub remote_user@remote_host`
+
+Refer to the included hosts file for a sample inventory, where you can configure the necessary variables.
+Under the `[cloud]` section, you need to specify the host where the management will be deployed.
+In the `[cloud:vars]` section, you must provide the domain isolation service and OVN database (OVNDB) image details. By default, it will use the latest available images.
+Additionally, you need to specify the Docker registry details for the private NGC organization. This ensures that the required images can be pulled from the appropriate registry.
+
+```
+[cloud]
+<host-domain-name-or-ip>
+
+[cloud:vars]
+ansible_python_interpreter=/usr/bin/python3
+ovn_domain_service_image=nvcr.io/npwmculvpxva/nbu-sdn/ovn-domain-service:latest
+ovndb_image=nvcr.io/npwmculvpxva/nbu-sdn/ovndb:latest
+docker_registry=nvcr.io
+docker_registry_user=<registry_user>
+docker_registry_pass=<registry_password>
+```
+
+# run
+
+```sh
+ansible-playbook deploy.yaml
+```
+
+The execution of this playbook will install the necessary packages required to run containers and Docker Compose. It will then proceed to build and run the OVN central components, deploy the database, and set up the service.
+Upon successful completion, you should see all the containers running. For example:
+
+```sh
+docker ps
+CONTAINER ID   IMAGE                                                    COMMAND                  CREATED        STATUS                  PORTS     NAMES
+1f3cb06cc86a   nvcr.io/npwmculvpxva/nbu-sdn/ovn-domain-service:latest   "/ovn-domain-service"    20 hours ago   Up 20 hours                       ovn-domain-service_ovn-domain-service_1
+f9fdc590b3d4   nvcr.io/npwmculvpxva/nbu-sdn/ovndb:latest                "/ovndb-entrypoint.s…"   20 hours ago   Up 20 hours (healthy)             ovn-domain-service_ovndb_1
+bc92a38cef7c   postgres                                                 "docker-entrypoint.s…"   20 hours ago   Up 20 hours (healthy)
+```
+
+# cleanup
+
+stop all the containers on the management node: ovndb, service and DB containers
+
+```sh
+ansible-playbook cleanup-deployment.yaml
+```
