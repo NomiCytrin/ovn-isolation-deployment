@@ -1,0 +1,14 @@
+---
+- name: Stop docker containers
+  ansible.builtin.shell: |
+      docker stop $(docker ps -aq)
+
+- name: Remove docker containers
+  ansible.builtin.shell: |
+      docker rm $(docker ps -aq)
+
+- name: delete OVS bridges
+  openvswitch.openvswitch.openvswitch_bridge: bridge="{{item.name}}" state="{{item.state}}" timeout={{ovs_timeout}}
+  loop:
+    - { name: "br-int",           state: "absent" }
+    - { name: "{{bridge_name}}",  state: "absent" }

@@ -108,10 +108,17 @@
   pip:
     name: docker
 
+- name: Log into private registry and force re-authorization
+  docker_login:
+    registry: "{{ docker_registry }}"
+    username: "{{ docker_registry_user }}"
+    password: "{{ docker_registry_pass }}"
+    reauthorize: yes
+
 - name: Start ovn-controller
   docker_container:
     name: ovn-controller
-    image: harbor.mellanox.com/cloud-orchestration-dev/hareesh/ovn-controller:arm64
+    image: "{{ ovn_controller_image }}"
     privileged: yes
     interactive: yes
     volumes:

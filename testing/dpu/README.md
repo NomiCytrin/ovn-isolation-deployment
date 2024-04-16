@@ -3,16 +3,41 @@
 
 ## Pre-requistes
 
+Before proceeding, ensure that you have access to the remote host where Ansible will execute its modules. This can be accomplished by copying your public key to the authorized keys on the remote host using the following command:
+`ssh-copy-id -i ~/.ssh/id_rsa.pub remote_user@remote_host`
+
+Verify connectivity with
+```sh
+ansible all -m ping
+```
+
 Install the ovs ansible package
 ```bash
 ansible-galaxy collection install openvswitch.openvswitch
 ```
 
 ## DPU based setup
-See the included `hosts` file for a sample inventory
+Refer to the included inventory file for a sample inventory, where you can configure the necessary variables.
+Under the `[compute]` section, you need to specify the hosts where the compute nodes will be deployed.
+In the `[compute:vars]` section, assign the following variables:
+- num_vfs: number of vfs on compute node
+- uplink: uplink interface
+
+In the `[dpu]` section, you need to specify the dpu system where the ovn chassis will be deployed. assign the following variables:
+- encap_ip: sets the IP address to be used as the source IP for tunneling (encapsulation)
+- ovn_hostname: assign a host name for the ovs instance
+In the `[compute:vars]` section, assign the following variables:
+- uplink_name: ovs port uplink name
+- bridge_name: ovs phaysical bridge name
+- ovs_timeout: ovs add port timeout
+- ovs_datapath_type: bridges datapath types (default: netdev)
+- mtu: uplink mtu
+- hugepages_count: number of 2 MB huge pages
+- ovn_sb_db_ip: ovn south bound database ip ( control plane host ip ) that will be used to connect ovn controller with ovn south bound
+- ovn_bridge_mappings: maps a physical network name (physnet) to a specific OVS bridge
 
 Run the ansible playbook as follows
 
 ```bash
-ansible-playbook deploy.yaml -i hosts
+ansible-playbook deploy.yaml
 ```
