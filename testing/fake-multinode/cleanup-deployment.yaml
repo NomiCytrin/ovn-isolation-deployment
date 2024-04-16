@@ -15,5 +15,7 @@
       ./ovn_cluster.sh stop
   
   - name: Stop docker containers
-    shell: |
-      docker stop $(docker ps -aq)
+    ansible.builtin.shell: docker stop $(docker ps -aq)
+
+  - name: Remove docker containers
+    ansible.builtin.shell: docker rm $(docker ps -aq)

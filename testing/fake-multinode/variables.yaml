@@ -1,5 +1,0 @@
----
-ovn_domain_service_image: harbor.mellanox.com/cloud-orchestration-dev/mfilanov/ovn-domain-service:latest
-docker_registry: harbor.mellanox.com
-docker_registry_user: cloudO
-docker_registry_pass: Dev12345

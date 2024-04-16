@@ -16,12 +16,12 @@ ansible_python_interpreter=/usr/bin/python3
 
 Verify connectivity with 
 ```sh
-ansible all -m ping -i hosts
+ansible all -m ping
 ```
 
 Valid reply will look similair to:
 ```sh
-ansible all -m ping -i hosts
+ansible all -m ping
 c-236-2-60-063 | SUCCESS => {
     "changed": false,
     "ping": "pong"
@@ -31,9 +31,9 @@ c-236-2-60-063 | SUCCESS => {
 # run
 
 ```sh
-ansible-playbook playbook.yaml -i hosts -e "@variables.yaml"
+ansible-playbook deploy.yaml
 ```
-This playbook will expect to have some varialbes in order to run, for example setting the image of the service
+This playbook will expect to have some varialbes under `inventory` in order to run, for example setting the image of the service
 it could be done by setting a variables file or specifically setting the image in the command line.
 Same is done for the container registry.
 
@@ -59,5 +59,5 @@ c43e1f8838b8   927a8c8d1e1d                                                     
 stop fake ovn multinode ånd all the other containers, be aware that all conatoners will stop, not only the one that where part of the docker compose
 
 ```sh
-ansible-playbook cleanup-playbook.yaml -i hosts -e "@variables.yaml"
+ansible-playbook cleanup-deployment.yaml
 ```
