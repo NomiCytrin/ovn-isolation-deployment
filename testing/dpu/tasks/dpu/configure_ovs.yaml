@@ -72,8 +72,9 @@
   block:
   - name: Set encap IP on bridge
     ansible.builtin.shell: |
-      if [ $(ip -br a | grep {{bridge_name}} | tr -s ' ' | cut -d " " -f 3) != "{{ encap_ip }}" ]; then
-        ip addr add {{ encap_ip }} dev {{bridge_name}}
+      ip_address=$(ip addr show dev {{bridge_name}} | awk '/inet /{print $2}')
+      if ["$ip_address" eq ""] || ["$ip_address" != {{encap_ip}}]; then
+        ip addr add {{encap_ip}} dev {{bridge_name}}
       fi
 
   - name: Set bridge up
