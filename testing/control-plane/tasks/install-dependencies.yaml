@@ -7,6 +7,5 @@
 
 - name: install docker
   ansible.builtin.pip:
-    name: "docker"
-    state: present
+    name: docker==5.0.3
     executable: pip3

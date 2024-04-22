@@ -16,6 +16,13 @@ uplink=p0
 <second_dpu_host_name_or_ip>  encap_ip=20.0.0.2/24 ovn_hostname=bf2
 
 [dpu:vars]
+ovn_controller_image=nvcr.io/npwmculvpxva/nbu-sdn/ovn-controller:arm64
+docker_registry=nvcr.io
+docker_registry_user=<registry_user>
+docker_registry_pass=<registry_password>
+
+ovn_sb_db_ip=<control_plane_host_ip>
+
 ansible_python_interpreter=/usr/bin/python3
 
 uplink_name=p0
@@ -28,10 +35,4 @@ mtu=9216
 
 hugepages_count=1536
 
-ovn_sb_db_ip=10.237.153.181
 ovn_bridge_mappings=physnet:{{bridge_name}}
-
-ovn_controller_image=nvcr.io/npwmculvpxva/nbu-sdn/ovn-controller:arm64
-docker_registry=nvcr.io
-docker_registry_user=<registry_user>
-docker_registry_pass=<registry_password>
