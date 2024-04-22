@@ -12,8 +12,8 @@ num_vfs=4
 uplink=p0
 
 [dpu]
-<first_dpu_host_name_or_ip>  encap_ip=20.0.0.1/24 ovn_hostname=bf1
-<second_dpu_host_name_or_ip>  encap_ip=20.0.0.2/24 ovn_hostname=bf2
+<first_dpu_host_name_or_ip>  encap_ip=20.0.0.1/24 ovn_hostname=bf1 vf_representors=pf0vf0_r,pf0vf1_r external_interface_ids=bf1pf0vf0,bf1pf0vf1
+<second_dpu_host_name_or_ip>  encap_ip=20.0.0.2/24 ovn_hostname=bf2 vf_representors=pf0vf0_r external_interface_ids=bf2pf0vf0
 
 [dpu:vars]
 ovn_controller_image=nvcr.io/npwmculvpxva/nbu-sdn/ovn-controller:arm64

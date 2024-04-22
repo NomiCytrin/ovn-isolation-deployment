@@ -26,6 +26,11 @@ In the `[compute:vars]` section, assign the following variables:
 In the `[dpu]` section, you need to specify the dpu system where the ovn chassis will be deployed. assign the following variables:
 - encap_ip: sets the IP address to be used as the source IP for tunneling (encapsulation)
 - ovn_hostname: assign a host name for the ovs instance
+- vf_representors: VF representor names should be listed separated by commas. For example: pf0vf0_r, pf0vf1_r
+- external_interface_ids: external interface name from ovn separated by commas, for example: bf1pf0vf0,bf1pf0vf1. Note: it is the same name that was provided to the InterfaceConfig API call.
+
+Note: The order of "vf_representors" and "external_interface_ids" is significant. Each element's position in the first list corresponds to the name at the same position in the second list.
+
 In the `[compute:vars]` section, assign the following variables:
 - uplink_name: ovs port uplink name
 - bridge_name: ovs phaysical bridge name

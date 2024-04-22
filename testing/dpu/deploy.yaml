@@ -11,3 +11,4 @@
   tasks:
   - include_tasks: tasks/dpu/main.yaml
   - include_tasks: tasks/dpu/configure_ovs.yaml
+  - include_tasks: tasks/dpu/ovs_binding.yaml

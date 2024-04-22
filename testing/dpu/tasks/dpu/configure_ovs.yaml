@@ -125,5 +125,3 @@
     volumes:
       - /var/run/openvswitch:/var/run/openvswitch
       - /var/run/ovn:/var/run/ovn
-
-
