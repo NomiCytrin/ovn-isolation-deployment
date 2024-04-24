@@ -1,17 +1,14 @@
 ---
-- name: Stop docker containers
-  ansible.builtin.shell: |
-      running_containers=$(docker ps -q)
-      if [ -n "$running_containers" ]; then
-        docker stop $running_containers
-      fi
+- name: Get running containers
+  docker_host_info:
+    containers: yes
+  register: docker_info
 
-- name: Remove docker containers
-  ansible.builtin.shell: |
-      containers=$(docker ps -aq)
-      if [ -n "$containers" ]; then
-        docker stop $containers
-      fi
+- name: Stop and Remove running containers
+  docker_container:
+    name: "{{ item }}"
+    state: absent
+  loop: "{{ docker_info.containers | map(attribute='Id') | list }}"
 
 - name: delete OVS bridges
   openvswitch.openvswitch.openvswitch_bridge: bridge="{{item.name}}" state="{{item.state}}" timeout={{ovs_timeout}}

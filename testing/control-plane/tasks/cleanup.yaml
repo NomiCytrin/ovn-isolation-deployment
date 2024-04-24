@@ -1,8 +1,11 @@
 ---
-- name: Stop docker containers
-  shell: |
-    docker stop $(docker ps -aq)
+- name: Get running containers
+  docker_host_info:
+    containers: yes
+  register: docker_info
 
-- name: Remove docker containers
-  shell: |
-    docker rm $(docker ps -aq)
+- name: Stop and Remove running containers
+  docker_container:
+    name: "{{ item }}"
+    state: absent
+  loop: "{{ docker_info.containers | map(attribute='Id') | list }}"
