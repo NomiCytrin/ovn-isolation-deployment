@@ -1,5 +1,5 @@
 - name: Management Host
-  hosts: cloud
+  hosts: control_plane
   remote_user: root
   gather_facts: no
   tasks:

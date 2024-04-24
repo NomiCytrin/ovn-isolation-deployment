@@ -1,9 +1,9 @@
 [all:vars]
 
-[cloud]
+[control_plane]
 <host_name_or_ip>
 
-[cloud:vars]
+[control_plane:vars]
 ansible_python_interpreter=/usr/bin/python3
 ovn_domain_service_image=nvcr.io/npwmculvpxva/nbu-sdn/ovn-domain-service:latest
 ovndb_image=nvcr.io/npwmculvpxva/nbu-sdn/ovndb:latest

@@ -4,15 +4,15 @@ Before proceeding, ensure that you have access to the remote host where Ansible 
 `ssh-copy-id -i ~/.ssh/id_rsa.pub remote_user@remote_host`
 
 Refer to the included hosts file for a sample inventory, where you can configure the necessary variables.
-Under the `[cloud]` section, you need to specify the host where the management will be deployed.
-In the `[cloud:vars]` section, you must provide the domain isolation service and OVN database (OVNDB) image details. By default, it will use the latest available images.
+Under the `[control_plane]` section, you need to specify the host where the management will be deployed.
+In the `[control_plane:vars]` section, you must provide the domain isolation service and OVN database (OVNDB) image details. By default, it will use the latest available images.
 Additionally, you need to specify the Docker registry details for the private NGC organization. This ensures that the required images can be pulled from the appropriate registry.
 
 ```
-[cloud]
+[control_plane]
 <host-domain-name-or-ip>
 
-[cloud:vars]
+[control_plane:vars]
 ansible_python_interpreter=/usr/bin/python3
 ovn_domain_service_image=nvcr.io/npwmculvpxva/nbu-sdn/ovn-domain-service:latest
 ovndb_image=nvcr.io/npwmculvpxva/nbu-sdn/ovndb:latest
