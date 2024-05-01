@@ -19,6 +19,13 @@ ansible-galaxy collection install openvswitch.openvswitch
 ## DPU based setup
 Refer to the included inventory file for a sample inventory, where you can configure the necessary variables.
 Under the `[compute]` section, you need to specify the hosts where the compute nodes will be deployed.
+- vfs: VF names should be listed separated by commas,
+For example: pf0vf0,pf0vf1
+- mac_addresses: mac addresses to be assigned to the VFs separated by commas,
+For example: "40:44:00:00:00:01","40:44:00:00:00:02"
+
+Note: The order of "vfs" and "mac_addresses" is significant. Each element's position in the first list corresponds to the name at the same position in the second list.
+
 In the `[compute:vars]` section, assign the following variables:
 - num_vfs: number of vfs on compute node
 - uplink: uplink interface

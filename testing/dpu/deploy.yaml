@@ -5,6 +5,7 @@
   gather_facts: no
   tasks:
   - include_tasks: tasks/compute/main.yaml
+  - include_tasks: tasks/compute/configure_vfs.yaml
 
 - name: BF setup
   remote_user: root

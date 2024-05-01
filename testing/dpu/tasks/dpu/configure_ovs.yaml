@@ -68,7 +68,7 @@
     loop_control:
       pause: 5
 
-- name: Brige and port configuration
+- name: Bridge and port configuration
   block:
   - name: Set encap IP on bridge
     ansible.builtin.shell: |

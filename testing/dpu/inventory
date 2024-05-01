@@ -2,8 +2,8 @@
 
 
 [compute]
-<first_host_name_or_ip>
-<second_host_name_or_ip>
+<first_host_name_or_ip> vfs=pf0vf0,pf0vf1 mac_addresses="40:44:00:00:00:01","40:44:00:00:00:02"
+<second_host_name_or_ip> vfs=pf0vf0,pf0vf1 mac_addresses="40:44:00:00:00:03","40:44:00:00:00:04"
 
 [compute:vars]
 ansible_python_interpreter=/usr/libexec/platform-python
