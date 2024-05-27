@@ -1,10 +1,4 @@
 ---
-- name: install docker compose
-  ansible.builtin.pip:
-    name: docker-compose
-    state: latest
-    executable: pip3
-
 - name: Log into private registry and force re-authorization
   docker_login:
     registry: "{{ docker_registry }}"
@@ -12,41 +6,38 @@
     password: "{{ docker_registry_pass }}"
     reauthorize: yes
 
-- name: run ovn domain service with DB 
-  docker_compose:
-    project_name: ovn-domain-service
-    definition:
-      services:
-        postgres:
-          image: postgres
-          network_mode: "host"
-          environment:
-            POSTGRES_PASSWORD: "mysecretpassword"
-            PGUSER: "postgres"
-          healthcheck:
-            test: [ "CMD-SHELL", "pg_isready" ]
-            interval: 1s
-            timeout: 60s
-            retries: 5
-            start_period: 5s
-        ovndb:
-          image: "{{ ovn_central_image }}"
-          network_mode: "host"
-          privileged: true
-          healthcheck:
-            test: ["CMD", "ovn-nbctl", "--db=tcp:0.0.0.0:6641", "list", "NB_global"]
-            interval: 1s
-            timeout: 60s
-            retries: 5
-            start_period: 5s
-        ovn-domain-service:
-          image: "{{ ovn_domain_service_image }}"
-          network_mode: "host"
-          environment:
-            DB_HOST: "127.0.0.1"
-            OVNNB_ENDPOINT: "tcp:127.0.0.1:6641"
-          depends_on:
-            postgres:
-              condition: service_healthy
-            ovndb:
-              condition: service_healthy
+- name: Copy ovn-central systemd service
+  template:
+    src: ../services/ovn-central.service
+    dest: /etc/systemd/system/ovn-central.service
+
+- name: Start ovn-central systemd service
+  systemd:
+    name: ovn-central.service
+    daemon_reload: yes
+    state: started
+    enabled: yes
+
+- name: Copy postgres-db systemd service
+  template:
+    src: ../services/postgres-db.service
+    dest: /etc/systemd/system/postgres-db.service
+
+- name: Start postgres systemd service
+  systemd:
+    name: postgres-db.service
+    daemon_reload: yes
+    state: started
+    enabled: yes
+
+- name: Copy ovn-domain-isolation systemd service
+  template:
+    src: ../services/ovn-domain-isolation.service
+    dest: /etc/systemd/system/ovn-domain-isolation.service
+
+- name: Start ovn-domain-isolation systemd service
+  systemd:
+    name: ovn-domain-isolation.service
+    daemon_reload: yes
+    state: started
+    enabled: yes

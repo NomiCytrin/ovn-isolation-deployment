@@ -10,3 +10,4 @@ ovn_central_image=nvcr.io/nvstaging/doca/ovn-central:v24.03.2
 docker_registry=nvcr.io
 docker_registry_user=<registry_user>
 docker_registry_pass=<registry_password>
+ovn_persistency_data=/etc/ovn

@@ -1,14 +1,8 @@
 ---
-- name: Get running containers
-  docker_host_info:
-    containers: yes
-  register: docker_info
-
-- name: Stop and Remove running containers
-  docker_container:
-    name: "{{ item }}"
-    state: absent
-  loop: "{{ docker_info.containers | map(attribute='Id') | list }}"
+- name: Stop systemd service
+  systemd:
+    name: ovn-controller.service
+    state: stopped
 
 - name: delete OVS bridges
   openvswitch.openvswitch.openvswitch_bridge: bridge="{{item.name}}" state="{{item.state}}" timeout={{ovs_timeout}}

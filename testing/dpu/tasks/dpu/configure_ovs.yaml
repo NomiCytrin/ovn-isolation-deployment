@@ -116,12 +116,14 @@
     password: "{{ docker_registry_pass }}"
     reauthorize: yes
 
-- name: Start ovn-controller
-  docker_container:
-    name: ovn-controller
-    image: "{{ ovn_controller_image }}"
-    privileged: yes
-    interactive: yes
-    volumes:
-      - /var/run/openvswitch:/var/run/openvswitch
-      - /var/run/ovn:/var/run/ovn
+- name: Copy systemd service
+  template:
+    src: ../../services/ovn-controller.service
+    dest: /etc/systemd/system/ovn-controller.service
+
+- name: Start systemd service
+  systemd:
+    name: ovn-controller.service
+    daemon_reload: yes
+    state: started
+    enabled: yes

@@ -10,6 +10,8 @@ docker_registry_pass=<registry_pass>
 ansible_python_interpreter=/usr/bin/python3
 ovn_domain_service_image=nvcr.io/nvstaging/doca/ovn-domain-service:latest
 ovn_central_image=nvcr.io/nvstaging/doca/ovn-central:v24.03.2
+ovn_persistency_data=/etc/ovn
+postgress_persistency_data=/var/lib/postgresql/data
 
 [compute]
 <first_host_name_or_ip> vfs=pf0vf0,pf0vf1 mac_addresses="40:44:00:00:00:01","40:44:00:00:00:02"
@@ -43,4 +45,3 @@ mtu=9216
 hugepages_count=1536
 
 ovn_bridge_mappings=physnet:{{bridge_name}}
-

@@ -7,6 +7,7 @@ Refer to the included hosts file for a sample inventory, where you can configure
 Under the `[control_plane]` section, you need to specify the host where the management will be deployed.
 In the `[control_plane:vars]` section, you must provide the domain isolation service and OVN database (OVNDB) image details. By default, it will use the latest available images.
 Additionally, you need to specify the Docker registry details for the private NGC organization. This ensures that the required images can be pulled from the appropriate registry.
+To ensure data persistence for the OVN and PostgreSQL databases, you can mount host volumes to store their data by configuring `ovn_persistency_data` and `postgress_persistency_data`
 
 ```
 [control_plane]
@@ -19,6 +20,8 @@ ovn_central_image=nvcr.io/nvstaging/doca/ovn-central:v24.03.2
 docker_registry=nvcr.io
 docker_registry_user=<registry_user>
 docker_registry_pass=<registry_password>
+ovn_persistency_data=/etc/ovn
+postgress_persistency_data=/var/lib/postgresql/data
 ```
 
 # run
