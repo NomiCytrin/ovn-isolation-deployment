@@ -14,8 +14,8 @@ Additionally, you need to specify the Docker registry details for the private NG
 
 [control_plane:vars]
 ansible_python_interpreter=/usr/bin/python3
-ovn_domain_service_image=nvcr.io/npwmculvpxva/nbu-sdn/ovn-domain-service:latest
-ovndb_image=nvcr.io/npwmculvpxva/nbu-sdn/ovndb:latest
+ovn_domain_service_image=nvcr.io/nvstaging/doca/ovn-domain-service:latest
+ovn_central_image=nvcr.io/nvstaging/doca/ovn-central:v24.03.2
 docker_registry=nvcr.io
 docker_registry_user=<registry_user>
 docker_registry_pass=<registry_password>
@@ -33,8 +33,8 @@ Upon successful completion, you should see all the containers running. For examp
 ```sh
 docker ps
 CONTAINER ID   IMAGE                                                    COMMAND                  CREATED        STATUS                  PORTS     NAMES
-1f3cb06cc86a   nvcr.io/npwmculvpxva/nbu-sdn/ovn-domain-service:latest   "/ovn-domain-service"    20 hours ago   Up 20 hours                       ovn-domain-service_ovn-domain-service_1
-f9fdc590b3d4   nvcr.io/npwmculvpxva/nbu-sdn/ovndb:latest                "/ovndb-entrypoint.s…"   20 hours ago   Up 20 hours (healthy)             ovn-domain-service_ovndb_1
+1f3cb06cc86a   nvcr.io/nvstaging/doca/ovn-domain-service:latest   "/ovn-domain-service"    20 hours ago   Up 20 hours                       ovn-domain-service_ovn-domain-service_1
+f9fdc590b3d4   nvcr.io/nvstaging/doca/ovn-central:v24.03.2                "/ovndb-entrypoint.s…"   20 hours ago   Up 20 hours (healthy)             ovn-domain-service_ovndb_1
 bc92a38cef7c   postgres                                                 "docker-entrypoint.s…"   20 hours ago   Up 20 hours (healthy)
 ```
 

@@ -30,7 +30,7 @@
             retries: 5
             start_period: 5s
         ovndb:
-          image: "{{ ovndb_image }}"
+          image: "{{ ovn_central_image }}"
           network_mode: "host"
           privileged: true
           healthcheck:

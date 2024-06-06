@@ -8,8 +8,8 @@ docker_registry_pass=<registry_pass>
 
 [control_plane:vars]
 ansible_python_interpreter=/usr/bin/python3
-ovn_domain_service_image=nvcr.io/npwmculvpxva/nbu-sdn/ovn-domain-service:latest
-ovndb_image=nvcr.io/npwmculvpxva/nbu-sdn/ovndb:latest
+ovn_domain_service_image=nvcr.io/nvstaging/doca/ovn-domain-service:latest
+ovn_central_image=nvcr.io/nvstaging/doca/ovn-central:v24.03.2
 
 [compute]
 <first_host_name_or_ip> vfs=pf0vf0,pf0vf1 mac_addresses="40:44:00:00:00:01","40:44:00:00:00:02"
@@ -26,7 +26,7 @@ uplink=p0
 <second_dpu_host_name_or_ip>  encap_ip=20.0.0.2/24 ovn_hostname=bf2 vf_representors=pf0vf0_r external_interface_ids=bf2pf0vf0
 
 [dpu:vars]
-ovn_controller_image=nvcr.io/npwmculvpxva/nbu-sdn/ovn-controller:arm64
+ovn_controller_image=nvcr.io/nvstaging/doca/ovn-controller:arm64-v24.03.2
 
 ovn_sb_db_ip=<control_plane_host_ip>
 
