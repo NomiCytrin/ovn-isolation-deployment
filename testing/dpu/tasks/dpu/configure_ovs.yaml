@@ -37,14 +37,6 @@
     ports_list:
       - { bridge: "{{bridge_name}}",  port: "{{uplink_name}}",  extra: "{{uplink_pci.stdout}},dv_xmeta_en=4,dv_flow_en=2" }
 
-- name: Set OVS datapath type
-  openvswitch.openvswitch.openvswitch_db: table=Bridge record="{{item}}" col=datapath_type value="{{ovs_datapath_type}}" timeout={{ovs_timeout}}
-  loop:
-    - "{{bridge_name}}"
-
-- name: Set external_ids-ovn-bridge-datapath-type
-  openvswitch.openvswitch.openvswitch_db: table=open_vswitch record=.  col=external_ids key=ovn-bridge-datapath-type value="{{ovs_datapath_type}}" timeout={{ovs_timeout}}
-
 
 - name: Initialize ovs-doca and add ports to bridges
   block:
@@ -67,6 +59,14 @@
     register: result
     loop_control:
       pause: 5
+
+- name: Set OVS datapath type
+  openvswitch.openvswitch.openvswitch_db: table=Bridge record="{{item}}" col=datapath_type value="{{ovs_datapath_type}}" timeout={{ovs_timeout}}
+  loop:
+    - "{{bridge_name}}"
+
+- name: Set external_ids-ovn-bridge-datapath-type
+  openvswitch.openvswitch.openvswitch_db: table=open_vswitch record=.  col=external_ids key=ovn-bridge-datapath-type value="{{ovs_datapath_type}}" timeout={{ovs_timeout}}
 
 - name: Bridge and port configuration
   block:

@@ -5,6 +5,9 @@
     ansible.builtin.shell: ip link set dev {{ item }} up
     loop: "{{ vf_representors.split(',') }}"
 
+  - name: Pause for 5 seconds
+    ansible.builtin.pause:    seconds=5
+
   - name: Connect Port to OVS Bridge br-int
     openvswitch.openvswitch.openvswitch_port:
       bridge: br-int
