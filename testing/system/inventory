@@ -12,6 +12,7 @@ ovn_domain_service_image=nvcr.io/nvstaging/doca/ovn-domain-service:latest
 ovn_central_image=nvcr.io/nvstaging/doca/ovn-central:v24.03.2
 ovn_persistency_data=/etc/ovn
 postgress_persistency_data=/var/lib/postgresql/data
+internal_ip_address_pool="100.64.0.0/16,100.65.0.0/16,100.66.0.0/16,100.67.0.0/16,100.68.0.0/16,100.69.0.0/16,100.70.0.0/16"
 
 [compute]
 <first_host_name_or_ip> vfs=pf0vf0,pf0vf1 mac_addresses="40:44:00:00:00:01","40:44:00:00:00:02"
