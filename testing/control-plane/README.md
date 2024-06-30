@@ -8,6 +8,7 @@ Under the `[control_plane]` section, you need to specify the host where the mana
 In the `[control_plane:vars]` section, you must provide the domain isolation service and OVN database (OVNDB) image details. By default, it will use the latest available images.
 Additionally, you need to specify the Docker registry details for the private NGC organization. This ensures that the required images can be pulled from the appropriate registry.
 To ensure data persistence for the OVN and PostgreSQL databases, you can mount host volumes to store their data by configuring `ovn_persistency_data` and `postgress_persistency_data`
+To configure the internal IP address pool for routing between domain network segments, specify the `internal_ip_address_pool` variable with a comma-separated list of IP addresses and their subnet masks.
 
 ```
 [control_plane]
@@ -22,6 +23,7 @@ docker_registry_user=<registry_user>
 docker_registry_pass=<registry_password>
 ovn_persistency_data=/etc/ovn
 postgress_persistency_data=/var/lib/postgresql/data
+internal_ip_address_pool="100.64.0.0/16,100.65.0.0/16,100.66.0.0/16,100.67.0.0/16,100.68.0.0/16,100.69.0.0/16,100.70.0.0/16"
 ```
 
 # run
